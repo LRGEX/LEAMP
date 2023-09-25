@@ -1,0 +1,4 @@
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+CREATE USER 'lrgex'@'%' IDENTIFIED BY 'Esxi1assword';
+GRANT ALL PRIVILEGES ON *.* TO 'lrgex'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
