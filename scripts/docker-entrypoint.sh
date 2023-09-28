@@ -43,9 +43,11 @@ EOF
     touch /var/www/.htaccess
     echo "AddHandler application/x-httpd-php .html" > /var/www/.htaccess
     chown -R www-data:www-data /usr/share/phpmyadmin/tmp/
-    chmod -R o+wrx /opt/ # so we can add and remove files or edit them
+    chmod -R o+wrx /opt/leamp # so we can add and remove files or edit them
     echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf
     sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf &> /dev/null 2>&1  # This is needed to make php work inside html -i to save it without the need for > example.txt
+    # adduser --system --uid=$(stat -c %u .) "$owner"
+    # echo "APACHE_RUN_USER=$owner" >> /etc/apache2/envvars
     service apache2 reload
     sleep 5
     # This part is for editing /etc/mysql/my.cnf file, so that it will accept connection from 3rd party database IDE
