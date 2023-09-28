@@ -1,0 +1,3 @@
+#!/bin/bash
+if [ -n "${MEGA_EMAIL}" ] && [ -n "${MEGA_PASSWORD}" ] && [ -n "${MEGA_PASSWORD}" ]; then
+fi

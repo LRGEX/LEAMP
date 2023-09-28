@@ -14,7 +14,7 @@ EOF
 ln -snf /usr/share/zoneinfo/"${TZ}" /etc/localtime && echo "${TZ}" > /etc/timezone # Set timezone for ubuntu
 env >> /etc/environment # This is needed for variables to be available to cron jobs or other programs
 
-if ! cat /etc/apache2/conf-available/phpmyadmin.conf &> /dev/null 2>&1 | grep -q "phpmyadmin signal"; then # AS IS
+if ! cat /opt/leamp/LRGEX.signals | grep -q "phpmyadmin signal"; then # AS IS
     echo "configuring phpmyadmin"
     tee /etc/apache2/conf-available/phpmyadmin.conf &> /dev/null 2>&1 << EOF
 # phpMyAdmin Apache configuration
@@ -36,7 +36,6 @@ Alias /phpmyadmin /usr/share/phpmyadmin
 <Directory /usr/share/phpmyadmin/setup/lib>
     Require all denied
 </Directory>
-#phpmyadmin signal
 EOF
     a2enconf phpmyadmin
     mkdir /usr/share/phpmyadmin/tmp/
@@ -80,6 +79,7 @@ EOF
     service mariadb start
     sleep 5
     mysql -u root < /opt/leamp/scripts/query.txt # mysql doeant like multiple commands so we have to run them from a file
+    echo "phpmyadmin signal" >> /opt/leamp/LRGEX.signals 
 else
     echo "No configuration needed for phpmyadmin"
     service mariadb start
